@@ -37,7 +37,7 @@ def get_menu():
                             if t.strip() and t.strip() not in cookie_tokens:
                                 cookie_tokens.append(t.strip())
 
-    text_message = "\n".join(cookie_tokens)
+    text_message = " &#127850; ".join(cookie_tokens)
     return text_message
 
 
