@@ -1,8 +1,9 @@
+from datetime import datetime, timedelta, timezone
+from pprint import pprint
+
 import requests
 from bs4 import BeautifulSoup
 from bs4.element import NavigableString
-from pprint import pprint
-from datetime import datetime, timezone, timedelta
 from flask import Flask
 
 app = Flask(__name__)
@@ -18,7 +19,9 @@ def get_menu():
     soup = BeautifulSoup(cookie_html)
     results = soup.findAll("div", {"role": "gridcell"})
 
-    day_of_week = datetime.now(timezone(timedelta(hours=-5), "EST")).strftime("%A").upper()
+    day_of_week = (
+        datetime.now(timezone(timedelta(hours=-5), "EST")).strftime("%A").upper()
+    )
 
     cookie_tokens = []
     for daily_cookie in results:
@@ -37,9 +40,11 @@ def get_menu():
     text_message = "\n".join(cookie_tokens)
     return text_message
 
-@app.route('/')
+
+@app.route("/")
 def index():
     return get_menu()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run(debug=True)
